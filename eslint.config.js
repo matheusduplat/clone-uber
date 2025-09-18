@@ -8,7 +8,7 @@ module.exports = defineConfig([
   {
     ignores: ["dist/*"],
     rules: {
-      "prettier/prettier": "error",
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
       "no-console": "warn", // alerta quando usar console.log
       "no-unused-vars": ["error", { argsIgnorePattern: "^_" }], // alerta variáveis não usadas, ignora _args
       "no-trailing-spaces": "warn", // alerta espaços finais
