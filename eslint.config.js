@@ -10,7 +10,10 @@ module.exports = defineConfig([
     rules: {
       "prettier/prettier": ["error", { endOfLine: "auto" }],
       "no-console": "warn", // alerta quando usar console.log
-      "no-unused-vars": ["error", { argsIgnorePattern: "^_" }], // alerta variáveis não usadas, ignora _args
+      "no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ], // alerta variáveis não usadas, ignora _args
       "no-trailing-spaces": "warn", // alerta espaços finais
       "no-duplicate-imports": "error", // erro em importações duplicadas
       "no-var": "error", // erro ao usar var
