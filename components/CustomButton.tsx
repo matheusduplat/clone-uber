@@ -3,6 +3,7 @@ import { Text, TouchableOpacity } from "react-native";
 
 interface Props extends ButtonProps {
   onPress?: () => void;
+  styleContainer?: string;
 }
 export default function CustomButton({
   onPress,
@@ -11,12 +12,12 @@ export default function CustomButton({
   title,
   IconLeft,
   IconRight,
-  className,
+  styleContainer,
 }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`w-full rounded-full p-3 flex flex-row justify-center items-center shadow-md shadow-neutral-400/70 ${getBgVariantStyle(bgVariant)} ${className}`}
+      className={`w-full rounded-full p-3 flex flex-row justify-center items-center shadow-md shadow-neutral-400/70 ${getBgVariantStyle(bgVariant)} ${styleContainer}`}
     >
       {IconLeft && <IconLeft />}
       <Text className={`text-lg font-bold ${getTextVariantStyle(textVariant)}`}>
