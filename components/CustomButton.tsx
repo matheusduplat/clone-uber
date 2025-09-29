@@ -1,9 +1,10 @@
 import { ButtonProps } from "@/types/types";
-import { Text, TouchableOpacity } from "react-native";
-
+import { Text, TouchableOpacity, View } from "react-native";
+import LoadingIcon from "@/components/LoadingIcon";
 interface Props extends ButtonProps {
   onPress?: () => void;
   styleContainer?: string;
+  isLoading?: boolean;
 }
 export default function CustomButton({
   onPress,
@@ -13,17 +14,33 @@ export default function CustomButton({
   IconLeft,
   IconRight,
   styleContainer,
+  isLoading,
 }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`w-full rounded-full p-3 flex flex-row justify-center items-center shadow-md shadow-neutral-400/70 ${getBgVariantStyle(bgVariant)} ${styleContainer}`}
+      className={`w-full  rounded-full p-3 flex flex-row justify-center items-center shadow-md shadow-neutral-400/70 ${getBgVariantStyle(bgVariant)} ${styleContainer}`}
     >
-      {IconLeft && <IconLeft />}
-      <Text className={`text-lg font-bold ${getTextVariantStyle(textVariant)}`}>
+      {IconLeft && (
+        <View className="mr-2">
+          <IconLeft />
+        </View>
+      )}
+      <Text
+        className={`text-lg font-bold  ${getTextVariantStyle(textVariant)}`}
+      >
         {title}
       </Text>
-      {IconRight && <IconRight />}
+      {isLoading && (
+        <View className="ml-2">
+          <LoadingIcon />
+        </View>
+      )}
+      {IconRight && (
+        <View className="ml-2">
+          <IconRight />
+        </View>
+      )}
     </TouchableOpacity>
   );
 }

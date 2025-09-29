@@ -1,9 +1,12 @@
+import { QueryClientConfig } from "@/config/QueryClientProvider";
 import "@assets/global.css";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { View } from "react-native";
 import "react-native-reanimated";
+import ToastManager from "toastify-react-native";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -44,7 +47,14 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <View style={{ flex: 1 }}>
+      <QueryClientConfig>
+        <ToastManager pointerEvents="box-none" />
+        <RootLayoutNav />
+      </QueryClientConfig>
+    </View>
+  );
 }
 
 function RootLayoutNav() {

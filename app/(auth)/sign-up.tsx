@@ -2,7 +2,8 @@ import CustomButton from "@/components/CustomButton";
 import { InputField } from "@/components/InputField";
 import { icons, images } from "@/constants";
 import { Link } from "expo-router";
-import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Image,
   Keyboard,
@@ -12,15 +13,22 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { SingUpSchema } from "@/utilities/schemaValidate/SignUpSchema";
+import { useSignUp } from "@/utilities/hook/auth/useSignUp";
 
 export default function SignUp() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ISingUpForm>({
+    resolver: yupResolver(SingUpSchema),
   });
+  const { signUp, loadingSignUp } = useSignUp();
 
-  const onSignUpPress = async () => {};
+  const onSignUpPress = async (data: ISingUpForm) => {
+    signUp(data);
+  };
   return (
     <KeyboardAvoidingView className="flex-1 bg-white" behavior={"padding"}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -40,33 +48,77 @@ export default function SignUp() {
 
             {/* Formulário */}
             <View className="p-5">
-              <InputField
-                label="Nome"
-                placeholder="Informe o nome"
-                value={form.name}
-                onChangeText={(text) => setForm({ ...form, name: text })}
-                icon={icons.person}
-              />
-              <InputField
-                label="Email"
-                placeholder="Informe o email"
-                value={form.email}
-                onChangeText={(text) => setForm({ ...form, email: text })}
-                icon={icons.email}
-              />
-              <InputField
-                label="Senha"
-                placeholder="Informe a senha"
-                value={form.password}
-                onChangeText={(text) => setForm({ ...form, password: text })}
-                secureTextEntry
-                icon={icons.lock}
-              />
-
+              <View>
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <InputField
+                      label="Nome"
+                      placeholder="Informe o nome"
+                      value={value}
+                      onChangeText={onChange}
+                      icon={icons.person}
+                      error={errors.name?.message}
+                    />
+                  )}
+                />
+              </View>
+              <View>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <InputField
+                      label="Email"
+                      placeholder="Informe o email"
+                      value={value}
+                      onChangeText={onChange}
+                      icon={icons.email}
+                      error={errors.email?.message}
+                    />
+                  )}
+                />
+              </View>
+              <View>
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <InputField
+                      label="Senha"
+                      placeholder="Informe a senha"
+                      value={value}
+                      onChangeText={onChange}
+                      secureTextEntry
+                      icon={icons.lock}
+                      error={errors.password?.message}
+                    />
+                  )}
+                />
+              </View>
+              <View>
+                <Controller
+                  name="password_confirmation"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <InputField
+                      label="Confirma Senha"
+                      placeholder="Confirme a senha"
+                      value={value}
+                      onChangeText={onChange}
+                      secureTextEntry
+                      icon={icons.lock}
+                      error={errors.password_confirmation?.message}
+                    />
+                  )}
+                />
+              </View>
               <CustomButton
-                title="Criar Conta"
-                onPress={onSignUpPress}
+                title={loadingSignUp ? "Carregando..." : "Criar Conta"}
+                onPress={handleSubmit(onSignUpPress)}
                 styleContainer="mt-6"
+                isLoading={loadingSignUp}
               />
 
               <Link
