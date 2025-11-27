@@ -1,4 +1,5 @@
 import { QueryClientConfig } from "@/config/QueryClientProvider";
+import { AuthProvider } from "@/context/AuthContext";
 import "@assets/global.css";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -44,7 +45,7 @@ export default function RootLayout() {
       // Aguarda um pouco para garantir que o splash seja visível
       const timer = setTimeout(() => {
         setAppIsReady(true);
-      }, 1500); // Mostra o splash por pelo menos 1.5 segundos
+      }, 1000); // Mostra o splash por pelo menos 1.5 segundos
 
       return () => clearTimeout(timer);
     }
@@ -63,8 +64,10 @@ export default function RootLayout() {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <QueryClientConfig>
-        <ToastManager pointerEvents="box-none" />
-        <RootLayoutNav />
+        <AuthProvider>
+          <ToastManager pointerEvents="box-none" />
+          <RootLayoutNav />
+        </AuthProvider>
       </QueryClientConfig>
     </View>
   );

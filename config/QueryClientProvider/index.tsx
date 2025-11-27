@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode, useMemo } from "react";
-
 interface Props {
   children: ReactNode;
 }
@@ -13,7 +12,6 @@ export function QueryClientConfig({ children }: Props) {
             refetchOnWindowFocus: false,
             staleTime: 0,
             gcTime: 0,
-            placeholderData: true,
             retry: (failureCount, error: any) => {
               if (
                 error?.response?.status == 401 ||
@@ -21,6 +19,10 @@ export function QueryClientConfig({ children }: Props) {
               ) {
                 return false;
               }
+              if (error?.response?.status == 403 && failureCount <= 1) {
+                return false;
+              }
+
               if (failureCount <= 4) {
                 return true;
               }
@@ -33,7 +35,8 @@ export function QueryClientConfig({ children }: Props) {
               if (
                 error?.response?.status == 401 ||
                 error?.response?.status == 422 ||
-                error?.response?.status == 404
+                error?.response?.status == 404 ||
+                error?.response?.status == 403
               ) {
                 return false;
               }
