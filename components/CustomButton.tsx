@@ -20,6 +20,7 @@ export default function CustomButton({
     <TouchableOpacity
       onPress={onPress}
       className={`w-full  rounded-full p-3 flex flex-row justify-center items-center shadow-md shadow-neutral-400/70 ${getBgVariantStyle(bgVariant)} ${styleContainer}`}
+      disabled={isLoading}
     >
       {IconLeft && (
         <View className="mr-2">
@@ -55,6 +56,8 @@ const getBgVariantStyle = (variant: ButtonProps["bgVariant"]) => {
       return "bg-green-500";
     case "outline":
       return "bg-transparent border-neutral-300 border-[0.5px]";
+    case "disabled":
+      return "bg-gray-300";
     default:
       return "bg-[#0286FF]";
   }
@@ -70,6 +73,8 @@ const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
       return "text-red-100";
     case "success":
       return "text-green-100";
+    case "disabled":
+      return "text-gray-300";
     default:
       return "text-white";
   }

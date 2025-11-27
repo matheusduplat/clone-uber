@@ -8,6 +8,7 @@ import {
   Image,
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   Text,
   TouchableWithoutFeedback,
@@ -30,7 +31,11 @@ export default function SignUp() {
     signUp(data);
   };
   return (
-    <KeyboardAvoidingView className="flex-1 bg-white" behavior={"padding"}>
+    <KeyboardAvoidingView
+      className="flex-1 bg-white"
+      behavior={Platform.OS === "ios" ? "padding" : "padding"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -119,6 +124,7 @@ export default function SignUp() {
                 onPress={handleSubmit(onSignUpPress)}
                 styleContainer="mt-6"
                 isLoading={loadingSignUp}
+                bgVariant={loadingSignUp ? "disabled" : "primary"}
               />
 
               <Link

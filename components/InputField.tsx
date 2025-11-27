@@ -18,7 +18,7 @@ export function InputField({
   const isPassword = secureTextEntry;
 
   return (
-    <View className="flex-1 justify-center p-4">
+    <View className="w-full mb-3">
       <Text className={`text-lg font-JakartaSemiBold mb-1 ml-2 ${labelStyle}`}>
         {label}
       </Text>

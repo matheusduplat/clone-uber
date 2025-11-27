@@ -1,7 +1,7 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL });
+const api = axios.create({ baseURL: `${process.env.EXPO_PUBLIC_API_URL}/api` });
 
 api.interceptors.request.use(async (config) => {
   const token = await AsyncStorage.getItem("@cloneuber.token");
@@ -11,7 +11,7 @@ api.interceptors.request.use(async (config) => {
 
 api.interceptors.response.use(
   (resp) => resp,
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error);
   },
 );
