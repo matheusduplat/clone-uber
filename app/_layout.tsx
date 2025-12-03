@@ -65,7 +65,7 @@ export default function RootLayout() {
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <QueryClientConfig>
         <AuthProvider>
-          <ToastManager pointerEvents="box-none" />
+          <ToastManager useModal={false} />
           <RootLayoutNav />
         </AuthProvider>
       </QueryClientConfig>

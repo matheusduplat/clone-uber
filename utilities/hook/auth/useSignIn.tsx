@@ -22,7 +22,7 @@ export function useSignIn() {
     },
     onError(error: CustomAxiosError) {
       const message =
-        error?.response?.data?.message || "Erro ao realizar cadastro";
+        error?.response?.data?.message || "Erro ao realizar login!";
       Toast.error(message);
       console.log(error.response);
     },
