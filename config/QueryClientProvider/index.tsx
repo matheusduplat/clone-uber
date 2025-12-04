@@ -15,11 +15,9 @@ export function QueryClientConfig({ children }: Props) {
             retry: (failureCount, error: any) => {
               if (
                 error?.response?.status == 401 ||
-                error?.response?.status == 404
+                error?.response?.status == 404 ||
+                error?.response?.status == 403
               ) {
-                return false;
-              }
-              if (error?.response?.status == 403 && failureCount <= 1) {
                 return false;
               }
 

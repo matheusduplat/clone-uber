@@ -13,16 +13,15 @@ const fetchMe = async () => {
     const error: CustomAxiosError = err;
     const message = error?.response?.data?.message || "";
     const status = error?.response?.status;
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem("@cloneuber.token");
 
     if (status === 403 && message === "Unauthorized" && token) {
       // sessão expirada ou token inválido
-      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("@cloneuber.token");
       Toast.error("Sessão expirada! Faça login novamente.");
       router.replace("/(auth)/sign-in");
       throw error;
     }
-
     throw error;
   }
 };

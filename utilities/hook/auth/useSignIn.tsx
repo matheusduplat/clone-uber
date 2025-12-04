@@ -18,7 +18,7 @@ export function useSignIn() {
     onSuccess(data) {
       Toast.success(data.message);
       AsyncStorage.setItem("@cloneuber.token", data.token);
-      router.replace("/(auth)/sign-in");
+      router.replace("/(root)/(tabs)/home");
     },
     onError(error: CustomAxiosError) {
       const message =

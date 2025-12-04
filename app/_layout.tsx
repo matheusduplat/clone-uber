@@ -4,7 +4,7 @@ import "@assets/global.css";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { View } from "react-native";
 import "react-native-reanimated";
 import ToastManager from "toastify-react-native";
@@ -23,8 +23,6 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [appIsReady, setAppIsReady] = useState(false);
-
   const [loaded, error] = useFonts({
     "Jakarta-Bold": require("../assets/fonts/PlusJakartaSans-Bold.ttf"),
     "Jakarta-ExtraBold": require("../assets/fonts/PlusJakartaSans-ExtraBold.ttf"),
@@ -42,27 +40,16 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      // Aguarda um pouco para garantir que o splash seja visível
-      const timer = setTimeout(() => {
-        setAppIsReady(true);
-      }, 1000); // Mostra o splash por pelo menos 1.5 segundos
-
-      return () => clearTimeout(timer);
+      SplashScreen.hideAsync();
     }
   }, [loaded]);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      await SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
+  if (!loaded) {
     return null;
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+    <View style={{ flex: 1 }}>
       <QueryClientConfig>
         <AuthProvider>
           <ToastManager useModal={false} />
