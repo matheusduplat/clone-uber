@@ -1,5 +1,6 @@
 import { icons } from "@/constants";
 import { Ride } from "@/types/types";
+import { statusPaymentTranslation } from "@/utilities/translation/StatusPayment";
 import { formatDate, formatTime } from "@/utilities/Utils";
 import { Image, Text, View } from "react-native";
 
@@ -51,6 +52,32 @@ export function RidesCard({
             </Text>
             <Text className="text-md font-JakartaMedium text-gray-500">
               {formatDate(created_at)}, {formatTime(ride_time)}
+            </Text>
+          </View>
+          <View className="flex flex-row items-center w-full justify-between mb-5">
+            <Text className="text-md font-JakartaMedium text-gray-500">
+              Motorista
+            </Text>
+            <Text className="text-md font-JakartaMedium text-gray-500">
+              {driver.first_name} {driver.last_name}
+            </Text>
+          </View>
+          <View className="flex flex-row items-center w-full justify-between mb-5">
+            <Text className="text-md font-JakartaMedium text-gray-500">
+              Lugares no carro
+            </Text>
+            <Text className="text-md font-JakartaMedium text-gray-500">
+              {driver.car_seats}
+            </Text>
+          </View>
+          <View className="flex flex-row items-center w-full justify-between ">
+            <Text className="text-md font-JakartaMedium text-gray-500">
+              Pagamento status
+            </Text>
+            <Text
+              className={`text-md font-JakartaMedium capitalize text-gray-500 ${payment_status === "paid" ? "text-green-500" : "text-red-500"}`}
+            >
+              {statusPaymentTranslation[payment_status]}
             </Text>
           </View>
         </View>
