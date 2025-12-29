@@ -3,7 +3,9 @@ import { GoogleTextInput } from "@/components/GoogleTextInput";
 import { Map } from "@/components/Map";
 import { RidesCard } from "@/components/RidesCard";
 import { icons, images } from "@/constants";
+import { useLocationStore } from "@/store";
 import { useAuthContext } from "@/utilities/hook/auth/useAuthContext";
+import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -13,9 +15,13 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Location from "expo-location";
 
 export default function Home() {
+  const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useAuthContext();
+  const [hasPermission, setHasPermission] = useState(false);
+
   const isLoading = true;
   const handleSingOut = () => {
     console.log("logout");
@@ -24,6 +30,34 @@ export default function Home() {
   const handleDestinationPress = () => {
     console.log("Destination pressed");
   };
+
+  useEffect(() => {
+    const requestLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") {
+        setHasPermission(false);
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync();
+      const address = await Location.reverseGeocodeAsync({
+        latitude: location.coords?.latitude!,
+        longitude: location.coords?.longitude!,
+      });
+
+      setUserLocation({
+        latitude: location.coords?.latitude!,
+        longitude: location.coords?.longitude!,
+        address:
+          address.length > 0
+            ? `${address[0].city ?? ""}, ${address[0].region ?? ""}`
+            : "Localização desconhecida",
+      });
+    };
+
+    requestLocation();
+  }, []);
 
   return (
     <SafeAreaView className="bg-general-500">
