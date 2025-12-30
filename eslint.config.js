@@ -19,6 +19,7 @@ module.exports = defineConfig([
       "no-var": "error", // erro ao usar var
       "react/no-unescaped-entities": "off", // desativa o aviso de entidades não escapadas em JSX
       eqeqeq: "off",
+      "react-hooks/exhaustive-deps": "off",
     },
   },
 ]);
