@@ -45,12 +45,9 @@ export default function Home() {
         latitude: location.coords?.latitude!,
         longitude: location.coords?.longitude!,
       });
-      console.log(location.coords);
       setUserLocation({
-        // latitude: location.coords?.latitude!,
-        // longitude: location.coords?.longitude!,
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: location.coords?.latitude!,
+        longitude: location.coords?.longitude!,
         address:
           address.length > 0
             ? `${address[0].city ?? ""}, ${address[0].region ?? ""}`
