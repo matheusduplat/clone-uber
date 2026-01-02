@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
+import { router } from "expo-router";
 
 export default function Home() {
   const { setUserLocation, setDestinationLocation } = useLocationStore();
@@ -27,8 +28,13 @@ export default function Home() {
     console.log("logout");
   };
 
-  const handleDestinationPress = () => {
-    console.log("Destination pressed");
+  const handleDestinationPress = (location: {
+    latitude: number;
+    longitude: number;
+    address: string;
+  }) => {
+    setDestinationLocation(location);
+    router.push("/(root)/find-ride");
   };
 
   useEffect(() => {
@@ -45,12 +51,13 @@ export default function Home() {
         latitude: location.coords?.latitude!,
         longitude: location.coords?.longitude!,
       });
+      console.log(address);
       setUserLocation({
         latitude: location.coords?.latitude!,
         longitude: location.coords?.longitude!,
         address:
           address.length > 0
-            ? `${address[0].city ?? ""}, ${address[0].region ?? ""}`
+            ? `${address[0].district ?? ""},${address[0].subregion ?? ""}, ${address[0].region ?? ""}`
             : "Localização desconhecida",
       });
     };
