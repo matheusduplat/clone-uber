@@ -7,6 +7,7 @@ import { FlatList, View } from "react-native";
 
 export default function ConfirmRide() {
   const { drivers, selectedDriver, setSelectedDriver } = useDriverStore();
+
   return (
     <RideLayout title="Escolha um carro" snapPoints={["65%", "85%"]}>
       <FlatList
