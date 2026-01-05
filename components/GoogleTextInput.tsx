@@ -1,6 +1,6 @@
 import { icons } from "@/constants";
 import { GoogleInputProps } from "@/types/types";
-import { Image, Text, View } from "react-native";
+import { Image, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 const googlePlaceAPiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
@@ -23,7 +23,7 @@ export function GoogleTextInput({
         textInputProps={{
           placeholderTextColor: "#9CA3AF",
           clearButtonMode: "never",
-          placeholder: initialLocation ?? "Para onde você que ir?",
+          placeholder: initialLocation || "Para onde você que ir?",
         }}
         enablePoweredByContainer={false}
         styles={{
